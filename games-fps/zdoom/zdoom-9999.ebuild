@@ -1,5 +1,5 @@
 # I originally swiped this from someone's bug
-# report, but I've chopped it to bits over time
+# report, but I've chopped it to bits over time.
 EAPI="2"
 inherit games cmake-utils subversion eutils
 
@@ -12,7 +12,7 @@ SLOT="0"
 
 KEYWORDS=""
 IUSE="mmx gtk"
-DEPEND="
+RDEPEND="
 	mmx? ( || ( dev-lang/nasm dev-lang/yasm ) )
 	gtk? ( x11-libs/gtk+:2 )
 	media-libs/libsdl
@@ -21,8 +21,9 @@ DEPEND="
 	media-libs/jpeg
 	media-sound/fluidsynth
 "
+
 src_prepare() {
-	# Use default game data path
+	# Use default game data path.
 	sed -i \
 		-e "s:/usr/local/share/:${GAMES_DATADIR}/doom-data/:" \
 		src/sdl/i_system.h || die
@@ -60,3 +61,4 @@ pkg_postinst() {
 	elog
 	elog "To play, simply run: \"${PN}\" (and add options and stuff)"
 }
+

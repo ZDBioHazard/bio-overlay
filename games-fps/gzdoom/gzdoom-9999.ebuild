@@ -50,6 +50,9 @@ src_install() {
 	insinto "${GAMES_DATADIR}/doom-data"
 	doins ${PN}.pk3 || die
 
+	doicon ${FILESDIR}/${PN}.svg
+	make_desktop_entry ${PN} "GZDoom"
+
 	prepgamesdirs
 }
 

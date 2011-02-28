@@ -10,9 +10,12 @@ These are usually new packages or fixes I find on the
 [Gentoo Bugzilla](http://bugs.gentoo.org/) and adapt for my use, but sometimes
 I write my own from scratch too. I'll try to credit when I remember. :)
 
-Notice about ebuilds
+Notice About Ebuilds
 ====================
 
-Please note that I'm still pretty new at writing ebuilds, so the dependencies
-or use flags may not always be entirely correct. I try.
+Remember to add the "**" keyword in /etc/portage/package.keywords for any live
+ebuilds you want to use.
+
+Please note that I'm still fairly new at writing ebuilds, so the dependencies or
+use flags may not always be entirely correct.
 

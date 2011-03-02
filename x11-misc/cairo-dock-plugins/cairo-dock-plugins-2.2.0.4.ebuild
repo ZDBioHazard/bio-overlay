@@ -78,10 +78,15 @@ src_configure() {
 	)
 
 	# Warn about missing kernel options.
-	if linux_config_exists && ! linux_chkconfig_present CONFIG_ACPI_PROCFS_POWER; then
-		ewarn "Power Manager requires CONFIG_ACPI_PROCFS_POWER to be set in your kernel."
-		ewarn "Power Manager will not be built."
+	if ! linux_config_exists; then
+		ewarn "Couldn't find your kernel .config, so Power Manager won't be built."
 		mycmakeargs+=( -DNO_POWERMANAGER=ON )
+	else
+		if ! linux_chkconfig_present ACPI_PROCFS_POWER; then
+			ewarn "Power Manager requires CONFIG_ACPI_PROCFS_POWER to be set in your kernel."
+			ewarn "Power Manager will not be built."
+			mycmakeargs+=( -DNO_POWERMANAGER=ON )
+		fi
 	fi
 
 	# Warn about experimental plugins.

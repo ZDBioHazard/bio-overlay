@@ -1,6 +1,7 @@
 # Copyright 1999-2010 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
+
 # I Originally swiped this from someone else's overlay, but I
 # basically totally rewrote it to add useflags and proper deps.
 EAPI="2"

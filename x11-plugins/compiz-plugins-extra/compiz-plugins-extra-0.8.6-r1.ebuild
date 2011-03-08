@@ -1,9 +1,9 @@
 # Copyright 1999-2010 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/x11-plugins/compiz-plugins-extra/compiz-plugins-extra-0.8.6-r1.ebuild,v 1.1 2010/09/04 22:15:21 flameeyes Exp $
+# $Header: $
 
+# This is just a copy of the ebuild from portage, but with a patch added.
 EAPI="2"
-
 inherit autotools eutils gnome2-utils
 
 DESCRIPTION="Compiz Fusion Window Decorator Extra Plugins"

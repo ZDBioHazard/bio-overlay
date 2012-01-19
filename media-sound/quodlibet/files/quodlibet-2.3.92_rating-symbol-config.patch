@@ -1,0 +1,32 @@
+--- quodlibet/util/__init__.py
++++ quodlibet/util/__init__.py
+@@ -11,6 +11,7 @@
+ import urlparse
+ import unicodedata
+ import urllib
++from quodlibet import config
+ 
+ # title function was moved to a separate module
+ from quodlibet.util.titlecase import title
+@@ -239,8 +240,9 @@
+ 
+ RATING_PRECISION = 0.25
+ def format_rating(value):
+-    """Turn a number into a sequence of music notes."""
+-    return (u'\u266a' * int(round((1/RATING_PRECISION) * min(value, 1.0))))
++    """Turn a number into a sequence of 'rating symbols'."""
++    count = int(round((1/RATING_PRECISION) * min(value, 1.0)))
++    return unicode(config.get("browsers", "rating_symbol")) * count
+ 
+ def format_size(size):
+     """Turn an integer size value into something human-readable."""
+--- quodlibet/config.py
++++ quodlibet/config.py
+@@ -125,6 +125,7 @@
+           "radio": "", # radio filter selection
+           "rating_click": "true", # click to rate song, on/off
+           "rating_confirm_multiple": "false", # confirm rating multiple songs
++          "rating_symbol": u"\u266a", # rating symbol (music note)
+           },
+ 
+         # Kind of a dumping ground right now, should probably be

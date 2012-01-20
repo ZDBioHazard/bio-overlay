@@ -17,7 +17,7 @@ SRC_URI="http://quodlibet.googlecode.com/files/${P}.tar.gz"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
-IUSE="dbus ipod stream"
+IUSE="dbus ipod stream pulseaudio"
 
 COMMON_DEPEND=">=dev-python/pygtk-2.12"
 RDEPEND="${COMMON_DEPEND}
@@ -30,6 +30,7 @@ RDEPEND="${COMMON_DEPEND}
 		app-misc/media-player-info
 		dev-python/dbus-python
 		)
+	pulseaudio? ( media-plugins/gst-plugins-pulse:0.10 )
 	stream? ( media-plugins/gst-plugins-soup:0.10 )
 	ipod? ( media-libs/libgpod[python] )"
 DEPEND="${COMMON_DEPEND}
@@ -37,10 +38,16 @@ DEPEND="${COMMON_DEPEND}
 REQUIRED_USE="ipod? ( dbus )"
 
 src_prepare() {
+	# Apply ALL the patches! _o/
 	epatch ${FILESDIR}/${P}_fix-window-destroy.patch
 	epatch ${FILESDIR}/${P}_rating-symbol-config.patch
 	epatch ${FILESDIR}/${P}_playcontrols-table.patch
-	sed -i -e '/gst_pipeline/s:"":"alsasink":' ${PN}/config.py || die
+
+	# Set the default GStreamer sink to ALSA or PulseAudio.
+	DEFAULT_SINK="alsasink"
+	if use pulseaudio; then DEFAULT_SINK="pulsesink"; fi
+	sed -i -e "/gst_pipeline/s:\"\":\"${DEFAULT_SINK}\":" ${PN}/config.py || die
+
 	distutils_src_prepare
 }
 

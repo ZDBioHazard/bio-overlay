@@ -39,6 +39,7 @@ REQUIRED_USE="ipod? ( dbus )"
 src_prepare() {
 	epatch ${FILESDIR}/${P}_fix-window-destroy.patch
 	epatch ${FILESDIR}/${P}_rating-symbol-config.patch
+	epatch ${FILESDIR}/${P}_playcontrols-table.patch
 	sed -i -e '/gst_pipeline/s:"":"alsasink":' ${PN}/config.py || die
 	distutils_src_prepare
 }

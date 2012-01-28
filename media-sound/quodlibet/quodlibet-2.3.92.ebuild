@@ -39,6 +39,7 @@ REQUIRED_USE="ipod? ( dbus )"
 
 src_prepare() {
 	# Apply ALL the patches! _o/
+	epatch ${FILESDIR}/${P}_fix-plugin-loader.patch
 	epatch ${FILESDIR}/${P}_fix-window-destroy.patch
 	epatch ${FILESDIR}/${P}_rating-symbol-config.patch
 	epatch ${FILESDIR}/${P}_playcontrols-table.patch

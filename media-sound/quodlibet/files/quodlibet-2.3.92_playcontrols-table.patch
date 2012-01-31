@@ -1,3 +1,9 @@
+# By ZDBioHazard, Jan 17, 2012
+#
+# This patch reformats the play controls on the main window into a single
+# table rather than a vbox of 2 separate tables. There is no functional
+# difference, I just feel it is cleaner this way. Saves 9 lines. ;)
+#
 --- quodlibet/qltk/controls.py
 +++ quodlibet/qltk/controls.py
 @@ -266,40 +266,31 @@

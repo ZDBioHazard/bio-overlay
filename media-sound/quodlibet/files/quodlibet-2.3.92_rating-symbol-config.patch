@@ -1,3 +1,16 @@
+# By ZDBioHazard, Jan 17, 2012
+#
+# This patch adds a configuration file option for the symbol to use for rating
+# display. There is no UI for this option, so you will have to edit it in the
+# config file manually. The key is "rating_symbol" in the "[browsers]" section.
+#
+# Note that the value of the configuration key is just the straight-up unicode
+# character to use. Make sure your editor supports unicode when editing or weird
+# stuff might happen. (All my editors support unicode, so I don't know.)
+#
+# Also note that this patch is not compatible
+# with the "rating-stars" patch and vice-versa.
+#
 --- quodlibet/util/__init__.py
 +++ quodlibet/util/__init__.py
 @@ -11,6 +11,7 @@

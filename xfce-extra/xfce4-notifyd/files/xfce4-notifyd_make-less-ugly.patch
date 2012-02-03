@@ -98,7 +98,25 @@
          gtk_widget_hide(window->summary);
          window->has_summary_text = FALSE;
      }
-@@ -1176,7 +1149,6 @@
+@@ -1049,6 +1022,8 @@
+         GdkPixbuf *pix;
+ 
+         gtk_icon_size_lookup(GTK_ICON_SIZE_DIALOG, &w, &h);
++        w *= 2;
++        h *= 2;
+ 
+         if(g_path_is_absolute(icon_name))
+           pix = gdk_pixbuf_new_from_file_at_size(icon_name, w, h, NULL);
+@@ -1092,6 +1067,8 @@
+         gint w, h, pw, ph;
+ 
+         gtk_icon_size_lookup(GTK_ICON_SIZE_DIALOG, &w, &h);
++        w *= 2;
++        h *= 2;
+         pw = gdk_pixbuf_get_width(pixbuf);
+         ph = gdk_pixbuf_get_height(pixbuf);
+ 
+@@ -1176,7 +1153,6 @@
          const gchar *cur_action_id = actions[i];
          const gchar *cur_button_text = actions[i+1];
          GtkWidget *btn, *lbl;
@@ -106,7 +124,7 @@
  
          if(!cur_button_text || !cur_action_id || !*cur_action_id)
              break;
-@@ -1191,16 +1163,12 @@
+@@ -1191,16 +1167,12 @@
                           G_CALLBACK(xfce_notify_window_button_clicked),
                           window);
  

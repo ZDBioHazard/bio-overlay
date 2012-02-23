@@ -16,38 +16,49 @@ SRC_URI="http://quodlibet.googlecode.com/files/${P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
-IUSE="dbus ipod stream pulseaudio"
+KEYWORDS="~alpha amd64 ~ppc ~ppc64 ~sparc ~x86"
+IUSE="dbus gstreamer ipod stream pulseaudio"
 
 COMMON_DEPEND=">=dev-python/pygtk-2.12"
 RDEPEND="${COMMON_DEPEND}
 	dev-python/feedparser
-	>=dev-python/gst-python-0.10.2:0.10
-	media-libs/gst-plugins-good:0.10
 	>=media-libs/mutagen-1.14
-	media-plugins/gst-plugins-meta:0.10
+	gstreamer? (
+		>=dev-python/gst-python-0.10.2:0.10
+		media-libs/gst-plugins-good:0.10
+		media-plugins/gst-plugins-meta:0.10
+		stream? ( media-plugins/gst-plugins-soup:0.10 )
+		pulseaudio? ( media-plugins/gst-plugins-pulse:0.10 )
+	)
+	!gstreamer? ( media-libs/xine-lib )
 	dbus? (
 		app-misc/media-player-info
 		dev-python/dbus-python
-		)
-	pulseaudio? ( media-plugins/gst-plugins-pulse:0.10 )
-	stream? ( media-plugins/gst-plugins-soup:0.10 )
+	)
 	ipod? ( media-libs/libgpod[python] )"
 DEPEND="${COMMON_DEPEND}
 	dev-util/intltool"
 REQUIRED_USE="ipod? ( dbus )"
 
 src_prepare() {
+	local qlconfig=${PN}/config.py
+
 	# Apply ALL the patches! _o/
 	epatch ${FILESDIR}/${P}_fix-plugin-loader.patch
 	epatch ${FILESDIR}/${P}_fix-window-destroy.patch
 	epatch ${FILESDIR}/${P}_rating-symbol-config.patch
 	epatch ${FILESDIR}/${P}_playcontrols-table.patch
+	epatch ${FILESDIR}/${P}-xine-lib-1.2.0.patch
 
-	# Set the default GStreamer sink to ALSA or PulseAudio.
-	DEFAULT_SINK="alsasink"
-	if use pulseaudio; then DEFAULT_SINK="pulsesink"; fi
-	sed -i -e "/gst_pipeline/s:\"\":\"${DEFAULT_SINK}\":" ${PN}/config.py || die
+	if use gstreamer; then
+		if use pulseaudio; then
+			sed -i -e '/gst_pipeline/s:"":"pulsesink":' ${qlconfig} || die
+		else
+			sed -i -e '/gst_pipeline/s:"":"alsasink":' ${qlconfig} || die
+		fi
+	else
+		sed -i -e '/backend/s:"gstbe":"xinebe":' ${qlconfig} || die
+	fi
 
 	distutils_src_prepare
 }

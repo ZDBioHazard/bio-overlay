@@ -17,7 +17,7 @@ SRC_URI="http://quodlibet.googlecode.com/files/${P}.tar.gz"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~alpha amd64 ~ppc ~ppc64 ~sparc ~x86"
-IUSE="dbus gstreamer ipod stream pulseaudio"
+IUSE="dbus gstreamer ipod stream pulseaudio biostyle"
 
 COMMON_DEPEND=">=dev-python/pygtk-2.12"
 RDEPEND="${COMMON_DEPEND}
@@ -46,9 +46,12 @@ src_prepare() {
 	# Apply ALL the patches! _o/
 	epatch ${FILESDIR}/${P}_fix-plugin-loader.patch
 	epatch ${FILESDIR}/${P}_fix-window-destroy.patch
-	epatch ${FILESDIR}/${P}_rating-symbol-config.patch
-	epatch ${FILESDIR}/${P}_playcontrols-table.patch
 	epatch ${FILESDIR}/${P}-xine-lib-1.2.0.patch
+
+	if use biostyle; then
+		epatch ${FILESDIR}/${P}_rating-symbol-config.patch
+		epatch ${FILESDIR}/${P}_playcontrols-table.patch
+	fi
 
 	if use gstreamer; then
 		if use pulseaudio; then

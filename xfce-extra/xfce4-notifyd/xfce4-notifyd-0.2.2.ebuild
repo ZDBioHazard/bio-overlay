@@ -12,7 +12,7 @@ SRC_URI="mirror://xfce/src/apps/${PN}/0.2/${P}.tar.bz2"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="amd64 x86"
-IUSE="debug"
+IUSE="debug biostyle"
 
 RDEPEND=">=xfce-base/libxfce4util-4.8
 	>=xfce-base/libxfce4ui-4.8
@@ -26,7 +26,9 @@ DEPEND="${RDEPEND}
 	sys-devel/gettext"
 
 src_prepare() {
-	epatch ${FILESDIR}/${PN}_make-less-ugly.patch
+	if use biostyle; then
+		epatch ${FILESDIR}/${PN}_make-less-ugly.patch
+	fi
 }
 
 pkg_setup() {

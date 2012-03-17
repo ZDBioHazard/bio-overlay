@@ -1,6 +1,6 @@
 # Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/xfce-extra/xfce4-notifyd/xfce4-notifyd-0.2.2.ebuild,v 1.2 2011/08/06 23:48:56 ssuominen Exp $
+# $Header: $
 
 EAPI=4
 inherit xfconf

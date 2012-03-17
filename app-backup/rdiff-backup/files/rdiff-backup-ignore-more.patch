@@ -1,0 +1,29 @@
+--- rdiff_backup/Globals.py
++++ rdiff_backup/Globals.py
+@@ -183,9 +183,23 @@
+ # case-insensitive regular expression won't be compressed (applies
+ # to .snapshots and .diffs).  The second below will be the
+ # compiled version of the first.
+-no_compression_regexp_string = ("(?i).*\\.(gz|z|bz|bz2|tgz|zip|rpm|deb|"
+-    "jpg|jpeg|gif|png|jp2|mp3|ogg|avi|wmv|mpeg|mpg|rm|mov|flac|shn|pgp|"
+-    "gpg|rz|lzh|zoo|lharc|rar|arj|asc)$")
++no_compression_regexp_string = ("(?i).*\\.("
++    # General-purpose archives.
++    "zip|z|gz|bz2|xz|lz|rz|lzma|tgz|tbz|txz|tlz|trz|rar|7z|"
++    # Relatively obscure archives.
++    "arj|lzh|lha|ace|sit|zoo|"
++    # Packages.
++    "rpm|deb|dmg|pkg|msi|cab|apk|jar|chm|"
++    # Compressed game data.
++    "pk3|mpq|"
++    # Images.
++    "jpg|jpeg|jp2|j2k|gif|png|mng|"
++    # Video.
++    "avi|mpg|mpeg|mp4|wmv|mov|qt|flv|ogv|mkv|vob|3gp|swf|ts|rm|"
++    # Audio.
++    "flac|ogg|m4a|aac|mp3|mp2|wma|asf|ra|ape|mpc|shn|wv|tta|ac3|amr|gsm|m4p|"
++    # Encrypted files. (Good encryption does not compress well.)
++    "pgp|gpg|asc)$")
+ no_compression_regexp = None
+ 
+ # If true, filelists and directory statistics will be split on

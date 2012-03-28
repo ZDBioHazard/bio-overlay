@@ -6,7 +6,7 @@ EAPI=4
 
 PYTHON_DEPEND="2:2.7"
 SUPPORT_PYTHON_ABIS="1"
-RESTRICT_PYTHON_ABIS="3.*"
+RESTRICT_PYTHON_ABIS="2.5 2.6 3.* *-jython 2.7-pypy-*"
 
 inherit distutils eutils
 
@@ -16,7 +16,7 @@ SRC_URI="http://quodlibet.googlecode.com/files/${P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~alpha amd64 ~ppc ~ppc64 ~sparc ~x86"
+KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE="dbus gstreamer ipod stream pulseaudio biostyle"
 
 COMMON_DEPEND=">=dev-python/pygtk-2.12"
@@ -43,14 +43,9 @@ REQUIRED_USE="ipod? ( dbus )"
 src_prepare() {
 	local qlconfig=${PN}/config.py
 
-	# Apply ALL the patches! _o/
-	epatch ${FILESDIR}/${P}_fix-plugin-loader.patch
-	epatch ${FILESDIR}/${P}_fix-window-destroy.patch
-	epatch ${FILESDIR}/${P}-xine-lib-1.2.0.patch
-
 	if use biostyle; then
-		epatch ${FILESDIR}/${P}_rating-symbol-config.patch
-		epatch ${FILESDIR}/${P}_playcontrols-table.patch
+		epatch ${FILESDIR}/${PN}_rating-symbol-config.patch
+		epatch ${FILESDIR}/${PN}_playcontrols-table.patch
 	fi
 
 	if use gstreamer; then

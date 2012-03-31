@@ -8,7 +8,9 @@ PYTHON_DEPEND="2:2.7"
 
 DESCRIPTION="ZDBioHazard's Plugins for Quod Libet"
 HOMEPAGE="https://github.com/ZDBioHazard/quodlibet-plugins-bio/"
-EGIT_REPO_URI="https://github.com/ZDBioHazard/quodlibet-plugins-bio.git"
+EGIT_REPO_URI="
+	  git://github.com/ZDBioHazard/quodlibet-plugins-bio.git
+	https://github.com/ZDBioHazard/quodlibet-plugins-bio.git"
 
 LICENSE="GPL-2"
 SLOT="0"

@@ -6,7 +6,9 @@ inherit autotools git-2
 
 DESCRIPTION="Attaches to GTK+ applications and shows widget heiarchy."
 HOMEPAGE="https://chipx86.github.com/gtkparasite/"
-EGIT_REPO_URI="https://github.com/chipx86/gtkparasite.git"
+EGIT_REPO_URI="
+	  git://github.com/chipx86/gtkparasite.git
+	https://github.com/chipx86/gtkparasite.git"
 
 LICENSE="MIT"
 SLOT="0"

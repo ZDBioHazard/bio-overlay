@@ -1,0 +1,11 @@
+--- src/sheet-control-gui.c
++++ src/sheet-control-gui.c
+@@ -2107,7 +2107,7 @@
+ 		     CONTEXT_DISPLAY_WITH_DATA_SLICER_ROW | CONTEXT_DISPLAY_WITH_DATA_SLICER_COL, 0,
+ 		     -1 },	/* end sub menu */
+ 
+-		{ N_("_Format All Cells..."), GTK_STOCK_PROPERTIES,
++		{ N_("_Format ALL The Cells!"), GTK_STOCK_PROPERTIES,
+ 		    0, 0, CONTEXT_FORMAT_CELL },
+ 		{ N_("C_onditional Formating..."), GTK_STOCK_PROPERTIES,
+ 		    0, 0, CONTEXT_FORMAT_CELL_COND },

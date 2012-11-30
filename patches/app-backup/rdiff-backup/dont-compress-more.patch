@@ -15,9 +15,9 @@
 +    # Packages.
 +    "rpm|deb|dmg|pkg|msi|cab|apk|jar|chm|"
 +    # Compressed game data.
-+    "pk3|mpq|"
++    "pk3|mpq|gcz|"
 +    # Images.
-+    "jpg|jpeg|jp2|j2k|gif|png|mng|"
++    "jpg|jpeg|jpe|jp2|j2k|gif|png|mng|"
 +    # Video.
 +    "avi|mpg|mpeg|mp4|wmv|mov|qt|flv|ogv|mkv|vob|3gp|swf|ts|rm|"
 +    # Audio.

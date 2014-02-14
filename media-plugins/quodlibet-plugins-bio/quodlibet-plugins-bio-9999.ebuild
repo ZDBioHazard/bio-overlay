@@ -2,38 +2,33 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="4"
-inherit python git-2
-PYTHON_DEPEND="2:2.7"
+EAPI="5"
+PYTHON_COMPAT=( python2_7 )
+inherit python-r1 git-2
 
 DESCRIPTION="ZDBioHazard's Plugins for Quod Libet"
 HOMEPAGE="https://github.com/ZDBioHazard/quodlibet-plugins-bio/"
-EGIT_REPO_URI="
-	  git://github.com/ZDBioHazard/quodlibet-plugins-bio.git
-	https://github.com/ZDBioHazard/quodlibet-plugins-bio.git"
+EGIT_REPO_URI="https://github.com/ZDBioHazard/quodlibet-plugins-bio.git"
 
 LICENSE="GPL-2"
 SLOT="0"
-
-KEYWORDS=""
+KEYWORDS="~amd64 ~x86"
 IUSE=""
-RDEPEND="media-sound/quodlibet"
 
-pkg_setup() {
-	python_set_active_version 2
-	python_pkg_setup
-}
+RDEPEND=">=media-sound/quodlibet-3.0.0"
 
 src_install() {
 	insinto "$(python_get_sitedir)"/quodlibet/plugins
 	doins -r songsmenu playorder # No 'events' or 'editing' plugins yet.
 }
 
-pkg_postinst() {
-	python_mod_optimize quodlibet/plugins
-}
+src_install() {
+	dodoc README.md
 
-pkg_postrm() {
-	python_mod_cleanup quodlibet/plugins
-}
+	# Get rid of things we don't want to install.
+	rm -rf README.md .gitignore .git/ patches/ || \
+		die "Couldn't remove useless files. D:"
 
+	local python_moduleroot=quodlibet/plugins
+	python_foreach_impl python_domodule .
+}

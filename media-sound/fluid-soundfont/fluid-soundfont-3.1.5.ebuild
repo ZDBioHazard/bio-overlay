@@ -2,25 +2,19 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-# Made this one myself. :)
-EAPI=2
+EAPI="2"
 inherit versionator
 
 MY_PV=$(replace_version_separator 2 '-' ${PV})
 DESCRIPTION="Standrad FluidSynth Soundfont. (GM and GS versions)"
 HOMEPAGE="http://www.fluidsynth.org/"
-SRC_URI="
-	mirror://debian/pool/main/f/fluid-soundfont/${PN}-gm_${MY_PV}_all.deb
-	mirror://debian/pool/main/f/fluid-soundfont/${PN}-gs_${MY_PV}_all.deb
-"
+SRC_URI="mirror://debian/pool/main/f/fluid-soundfont/${PN}-gm_${MY_PV}_all.deb
+         mirror://debian/pool/main/f/fluid-soundfont/${PN}-gs_${MY_PV}_all.deb"
 
 LICENSE="CC-BY"
 SLOT="0"
 KEYWORDS="x86 amd64"
 IUSE="timidity"
-
-DEPEND=""
-RDEPEND=""
 
 src_unpack() {
 	# Unpack the GM version.

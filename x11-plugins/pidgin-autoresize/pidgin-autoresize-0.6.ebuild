@@ -2,8 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-# Made this one myself. :)
-EAPI="2"
+EAPI="5"
 
 DESCRIPTION="pidgin-autoresize resizes the buddy list vertically to fit the number of buddies shown"
 HOMEPAGE="http://raoulito.info/plugins/pidgin_autoresize/"
@@ -16,8 +15,4 @@ IUSE=""
 
 RDEPEND="net-im/pidgin"
 DEPEND="${RDEPEND} dev-util/pkgconfig"
-
-src_install() {
-	make DESTDIR="${D}" install || die "Install failed! D:"
-}
 

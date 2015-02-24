@@ -1,3 +1,12 @@
+#
+# This patch adds a toggle option to the xfwm4-tweaks dialog that
+# forces the resize hint box to display on all resize operations,
+# not just on windows with fixed resize increment hints.
+#
+# Note:
+#   Unfortunately, the Glade UI file is precompiled in the distribution
+#   tarball, so it will need to be regenerated somehow.
+#
 --- settings-dialogs/tweaks-settings.c
 +++ settings-dialogs/tweaks-settings.c
 @@ -196,6 +196,7 @@

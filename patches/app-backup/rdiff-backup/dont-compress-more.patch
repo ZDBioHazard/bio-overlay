@@ -1,3 +1,8 @@
+#
+# This patch adds more file types to the ignore compression list,
+# theoretically saving processor time by not compressing files
+# that aren't likely to benefit from data compression.
+#
 --- rdiff_backup/Globals.py
 +++ rdiff_backup/Globals.py
 @@ -183,9 +183,23 @@

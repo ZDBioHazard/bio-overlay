@@ -1,3 +1,13 @@
+#
+# This patch makes Mangler mute and unmute your selected pulseaudio input
+# device every time you press or release the push-to-talk key, effectively
+# making it only record audio when the PTT button is held down.
+#
+# I use this to avoid having a constantly open mic while recording streams.
+#
+# The method this implementation uses is a little messier than I
+# really wanted, but it's been working without issues for months.
+#
 --- src/manglerpulse.cpp
 +++ src/manglerpulse.cpp
 @@ -47,6 +47,8 @@

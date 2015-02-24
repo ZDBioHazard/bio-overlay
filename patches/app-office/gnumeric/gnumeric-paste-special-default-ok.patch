@@ -1,3 +1,12 @@
+#
+# This patch makes the "OK" button on the "Paste Special" dialog the
+# "default" button, saving you a mouse click every time you use it.
+#
+# Note:
+#   This patch doesn't seem to work properly anymore.
+#   The patch applies, but doesn't change the application's behavior.
+#   It might be a GTK3 problem. It used to work in the GTK2 version.
+#
 --- src/dialogs/paste-special.ui
 +++ src/dialogs/paste-special.ui
 @@ -395,6 +395,8 @@

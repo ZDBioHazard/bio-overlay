@@ -1,0 +1,107 @@
+--- src/manglerpulse.cpp
++++ src/manglerpulse.cpp
+@@ -47,6 +47,8 @@
+     close();
+ }/*}}}*/
+ 
++static int pa_set_mute(const char *device, const int mute);
++
+ bool
+ ManglerPulse::open(int type, Glib::ustring device, int rate, int channels) {/*{{{*/
+     pulse_samplespec.rate     = rate;
+@@ -65,6 +67,12 @@
+         pulse_stream = NULL;
+         return false;
+     }
++
++    if (type == AUDIO_INPUT && device.length()) {
++        pulse_muting_device = device;
++        pa_set_mute(pulse_muting_device.c_str(), 0);
++    }
++
+     return true;
+ }/*}}}*/
+ 
+@@ -77,6 +85,9 @@
+         pa_simple_free(pulse_stream);
+         pulse_stream = NULL;
+     }
++
++    if (pulse_muting_device.length())
++        pa_set_mute(pulse_muting_device.c_str(), 1);
+ }/*}}}*/
+ 
+ bool
+@@ -338,5 +349,62 @@
+     return;
+ }
+ 
++static void pa_mute_state_cb(pa_context *c, void *userdata) {/*{{{*/
++    int *pa_ready = (int *)userdata;
++
++    switch (pa_context_get_state(c)) {
++        case PA_CONTEXT_READY:
++            *pa_ready = 1;
++        break;
++        case PA_CONTEXT_FAILED:
++        case PA_CONTEXT_TERMINATED:
++            *pa_ready = 2;
++        break;
++    }
++}/*}}}*/
++
++static int pa_set_mute(const char *device, const int mute) {/*{{{*/
++    pa_mainloop *pa_ml;
++    pa_mainloop_api *pa_mlapi;
++    pa_operation *pa_op;
++    pa_context *pa_ctx;
++
++    int state = 0;
++    int pa_ready = 0;
++
++    pa_ml = pa_mainloop_new();
++    pa_mlapi = pa_mainloop_get_api(pa_ml);
++    pa_ctx = pa_context_new(pa_mlapi, "test");
++
++    pa_context_connect(pa_ctx, NULL, (pa_context_flags_t)0, NULL);
++    pa_context_set_state_callback(pa_ctx, pa_mute_state_cb, &pa_ready);
++
++    for (;;) {
++        if (pa_ready == 0) {
++            pa_mainloop_iterate(pa_ml, 1, NULL);
++            continue;
++        } else if (pa_ready == 2) {
++            pa_context_disconnect(pa_ctx);
++            pa_context_unref(pa_ctx);
++            pa_mainloop_free(pa_ml);
++            return -1;
++        }
++
++        if (state == 0) {
++            pa_op = pa_context_set_source_mute_by_name(pa_ctx, device, mute, NULL, NULL);
++            state++;
++        } else if (state == 1) {
++            if (pa_operation_get_state(pa_op) == PA_OPERATION_DONE) {
++                pa_context_disconnect(pa_ctx);
++                pa_context_unref(pa_ctx);
++                pa_mainloop_free(pa_ml);
++                return 0;
++            }
++        }
++
++        pa_mainloop_iterate(pa_ml, 1, NULL);
++    }
++}/*}}}*/
++
+ #endif
+ 
+--- src/manglerpulse.h
++++ src/manglerpulse.h
+@@ -39,6 +39,7 @@
+     pa_buffer_attr  buffer_attr;
+     pa_simple       *pulse_stream;
+     int             pulse_error;
++    Glib::ustring   pulse_muting_device;
+ public:
+     virtual bool            open(int type, Glib::ustring device, int rate, int channels);
+     virtual void            close(bool drain = false);
